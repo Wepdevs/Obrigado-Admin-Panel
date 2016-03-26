@@ -14,18 +14,9 @@
 <template>
 
     <firebase-collection id="userSentencesRef"
-                         location="https://popping-heat-2481.firebaseio.com/Users/{{userData.uid}}/frasi"
+                         location="https://popping-heat-2481.firebaseio.com/Users/{{userData.uid}}/sentences"
                          data = "{{userSentences}}">
     </firebase-collection>  
-
-    <div>frasi utente!</div>
-    <template is="dom-repeat" items="{{userSentences}}">
-    		<div>{{item.firebaseKey}}</div>
-    </template>
-
-    <paper-button on-tap="logSent" raised>user sentences</paper-button>
-	
-
 </template>
 
 <script>
@@ -46,7 +37,9 @@
 			}, 
 
 			userSentences: {
-				type:Object
+				type: Object, 
+				reflectToAttribute: true, 
+				notify: true
 			}
 		},
 

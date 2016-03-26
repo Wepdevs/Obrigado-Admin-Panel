@@ -60,7 +60,7 @@
 
 			<iron-pages id="ironpages" selected="0">
 				<div role="page" name="Login" order="1" icon="info">
-					<firebase-login id="login" location="[[location]]" user="{{authData}}"></firebase-login>
+					<firebase-login id="login" location="[[location]]" user="{{authData}}" user-sentences="{{userSentences}}"></firebase-login>
 				</div>
 				<div role="page" name="Languages" order="2" icon="language">
 					<languages-manager location="[[location]]"></languages-manager>
@@ -69,7 +69,7 @@
 					<categories-manager location="[[location]]"></categories-manager>
 				</div>
 				<div role="page" name="Sentences" order="4" icon="communication:chat-bubble">
-					<sentences-manager location="[[location]]"></sentences-manager>
+					<sentences-manager location="[[location]]" user-sentences="{{userSentences}}"></sentences-manager>
 				</div>
 			</iron-pages> 
 		 </paper-scroll-header-panel>
@@ -90,6 +90,11 @@ Polymer({
 
 		authData: {
 			type: Object
+		}, 
+
+		userSentences: {
+			type: Object, 
+			notify: true
 		}
 	},
 

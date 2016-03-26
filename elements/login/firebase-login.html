@@ -8,7 +8,7 @@
 
 	<template>
 
-		<user-manager id="userManager" location="{{location}}" user-data="{{user}}"></user-manager>
+		<user-manager id="userManager" location="{{location}}" user-data="{{user}}" user-sentences="{{userSentences}}"></user-manager>
 
 		<firebase-auth id="auth" provider="password"
 					location="{{location}}"
@@ -26,7 +26,6 @@
    	    <!--<img src="{{user.google.profileImageURL}}"></img>-->
 
    	    <paper-input label="username" id="username"></paper-input>
-
    	    <paper-input label="password" type="password" id="password"></paper-input>
 
 		<paper-button on-tap="login" raised>ADMIN LOGIN</paper-button>
@@ -50,6 +49,12 @@
 			        notify: true, 
 			    	observer: '_userChanged'
 			        
+			    },
+
+			    userSentences: {
+			    	type: Object,
+			    	reflectToAttribute: true,
+			    	notify: true
 			    },
 
 			    location: {

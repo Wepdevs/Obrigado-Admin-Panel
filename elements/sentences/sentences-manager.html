@@ -96,17 +96,16 @@ Polymer({
 
 		userSentences: {
 			type: Object,
-			notify: true
+			notify: true,
+			reflectToAttribute: true
 		}
-	},
-
-	logUserSentences: function(){
-		console.log(this.userSentences);
 	},
 
 	hasObrigado: function(key){
 		
-		var ref = new Firebase(this.location);
+		retVal = "thumb-up";
+
+		/*var ref = new Firebase(this.location);
 		retVal = "thumb-up";
 
 		var path = 'Users/' + ref.getAuth().uid + '/sentences/';
@@ -125,7 +124,19 @@ Polymer({
 			}
 		});
 
-		console.log(retVal);
+		console.log(retVal);*/
+
+		for(var i = 0; i< this.userSentences.length; i++){
+
+			console.log(retVal);
+
+			if(this.userSentences[i]["firebaseKey"] == key){
+				retVal = "thumb-down";
+				console.log("doooown");
+				break;
+			}
+				
+		}
 
 		return retVal;
 	},
