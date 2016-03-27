@@ -41,26 +41,48 @@
 				reflectToAttribute: true, 
 				notify: true
 			}
+
 		},
 
-		ready: function(){
-			document.addEventListener('obrigado', function(e){
-			
-	// setta gli obrigado sulle frasi dell utente
 
-			console.log('dentro al writer frasi');
-			console.log(e.detail.location);
+		setObrigado: function(sentence){
 
-			var ref = new Firebase(e.detail.location + 'Users/');
-			
-			var path = ref.getAuth().uid.toString() + '/sentences/';
+			var isLiked = false;
 
-			console.log(path);
+			for(var i = 0; i < this.userSentences.length; i++){
 
-			ref.child(path).push({firebaseKey: e.detail.data.__firebaseKey__});
+			if(this.userSentences[i]["firebaseKey"] == sentence.__firebaseKey__){
+				isLiked = true;
+				break;
+				}
+			}
 
+			var path = this.location + 'Users/' + this.userData.uid.toString() + '/sentences/';
+			var ref = new Firebase(path);
+
+			if(!isLiked){
+				console.info('adding Obrigado!');
+				ref.push({firebaseKey: sentence.__firebaseKey__});
+			}
+			else{
+
+			ref.once("value", function(snapshot){
+
+				var key = snapshot.val();
+
+				for(valore in key){
+					if(key[valore]["firebaseKey"] == sentence.__firebaseKey__){
+						console.info('removing Obrigado!')
+						ref.child(valore).remove();
+					}
+				}
 			});
+
+
+			}
+			
 		},
+
 
 		logSent: function(){
 			console.log(this.userSentences);

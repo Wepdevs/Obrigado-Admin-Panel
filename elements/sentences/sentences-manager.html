@@ -105,37 +105,12 @@ Polymer({
 		
 		retVal = "thumb-up";
 
-		/*var ref = new Firebase(this.location);
-		retVal = "thumb-up";
-
-		var path = 'Users/' + ref.getAuth().uid + '/sentences/';
-
-		ref = new Firebase(this.location + path);
-
-		ref.once("value", function(snapshot){
-
-			var frasi = snapshot.val();
-
-			for (item in frasi){
-
-				if(frasi[item]["firebaseKey"] == key){
-					retVal =  "thumb-down";
-				}
-			}
-		});
-
-		console.log(retVal);*/
-
 		for(var i = 0; i< this.userSentences.length; i++){
-
-			console.log(retVal);
 
 			if(this.userSentences[i]["firebaseKey"] == key){
 				retVal = "thumb-down";
-				console.log("doooown");
 				break;
 			}
-				
 		}
 
 		return retVal;
@@ -160,7 +135,7 @@ Polymer({
 
 	fireObrigado: function(e){
 
-		this.fire('obrigado', {data: e.model.sentence, location: this.location });
+		this.fire('obrigado', {data: e.model.sentence});
 	},
 
 	isCategorySelected: function(sentence, chosenCategory){

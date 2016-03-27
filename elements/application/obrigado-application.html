@@ -98,6 +98,15 @@ Polymer({
 		}
 	},
 
+	listeners: {
+		'obrigado': 'handleObrigado'
+	},
+
+	handleObrigado: function(e){
+
+		this.$.login.setObrigado(e.detail.data);
+	},
+
 	logUserData: function(){
 
 		console.log(this.authData);
