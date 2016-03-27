@@ -63,24 +63,21 @@
 			if(!isLiked){
 				console.info('adding Obrigado!');
 				ref.push({firebaseKey: sentence.__firebaseKey__});
-			}
+			}	
 			else{
 
-			ref.once("value", function(snapshot){
+				ref.once("value", function(snapshot){
 
-				var key = snapshot.val();
+					var key = snapshot.val();
 
-				for(valore in key){
-					if(key[valore]["firebaseKey"] == sentence.__firebaseKey__){
-						console.info('removing Obrigado!')
-						ref.child(valore).remove();
+					for(valore in key){
+						if(key[valore]["firebaseKey"] == sentence.__firebaseKey__){
+							console.info('removing Obrigado!')
+							ref.child(valore).remove();
+						}
 					}
-				}
-			});
-
-
+				});
 			}
-			
 		},
 
 

@@ -33,9 +33,13 @@
 	<paper-drawer-panel id="paperDrawerPanel">
 		<paper-scroll-header-panel drawer fixed>
 
-			<paper-toolbar id="drawerToolbar">
+			<!--<paper-toolbar id="drawerToolbar">
 	          <span class="paper-font-title">Menu</span>
-	        </paper-toolbar>
+	        </paper-toolbar> -->
+
+	        <div id="drawerToolbar">MENU</div>
+
+	        <paper-button on-tap="showLanguages">show lanuages</paper-button>
 
 			<pages-menu id="ironmenu"></iron-pages-menu> 
 
@@ -63,7 +67,7 @@
 					<firebase-login id="login" location="[[location]]" user="{{authData}}" user-sentences="{{userSentences}}"></firebase-login>
 				</div>
 				<div role="page" name="Languages" order="2" icon="language">
-					<languages-manager location="[[location]]"></languages-manager>
+					<languages-manager location="[[location]]" languages="{{languages}}"></languages-manager>
 				</div>
 				<div role="page" name="Categories" order="3" icon="maps:local-offer">
 					<categories-manager location="[[location]]"></categories-manager>
@@ -102,14 +106,14 @@ Polymer({
 		'obrigado': 'handleObrigado'
 	},
 
+	showLanguages: function(){
+		console.log(this.userSentences);
+		//this.languages.slice();
+	},
+
 	handleObrigado: function(e){
 
 		this.$.login.setObrigado(e.detail.data);
-	},
-
-	logUserData: function(){
-
-		console.log(this.authData);
 	},
 
 	attached: function(){

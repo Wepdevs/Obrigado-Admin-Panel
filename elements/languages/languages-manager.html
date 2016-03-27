@@ -25,7 +25,7 @@
 </style>
 
 	<firebase-collection id="ref"
-                             location="https://popping-heat-2481.firebaseio.com/Languages/"
+                             location="{{location}}Languages/"
                              data = "{{languages}}">
     </firebase-collection>
 
@@ -74,9 +74,12 @@
 		properties: {
 
 			languages: {
-				type: Object, 
-				notify: true
-			}
+				type: Array, 
+				notify: true,
+				reflectToAttribute: true
+			}, 
+
+			location: String
 		},
 		
 		editLanguage: function(e){
