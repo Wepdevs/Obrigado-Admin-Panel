@@ -40,7 +40,7 @@
 		<template is="dom-if" if="{{isCategorySelected(sentence, chosenCategory)}}">
 			<paper-item>
 				<span>{{sentence.italiano}}<span>
-				<paper-icon-button icon="{{hasObrigado(sentence.__firebaseKey__)}}" on-tap="fireObrigado"></paper-icon-button>
+				<paper-icon-button icon="{{hasObrigado(sentence.__firebaseKey__, userSentences)}}" on-tap="fireObrigado"></paper-icon-button>
 				<template is="dom-if" if="{{isAllSelected(chosenCategory)}}">
 					<span>({{sentence.category}})</span>
 				</template>
@@ -101,7 +101,17 @@ Polymer({
 		}
 	},
 
-	hasObrigado: function(key){
+	observers: ['userSentencesChanged(userSentences.*)'],
+
+	userSentencesChanged: function(changeRecord){
+		//console.log(changeRecord.value);
+	},
+
+	hasObrigado: function(key, userSentences){
+
+		console.log(userSentences);
+
+		console.log('setting icon');
 		
 		retVal = "thumb-up";
 
