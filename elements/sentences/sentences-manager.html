@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/firebase-element/firebase-collection.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 
-<dom-module is="sentences-manager">
+<dom-module id="sentences-manager">
 
 <template>
 
@@ -99,17 +99,10 @@ Polymer({
 			notify: true,
 			reflectToAttribute: true
 		}
-	},
 
-	observers: ['userSentencesChanged(userSentences.*)'],
-
-	userSentencesChanged: function(changeRecord){
-		//console.log(changeRecord.value);
 	},
 
 	hasObrigado: function(key, userSentences){
-
-		console.log(userSentences);
 
 		console.log('setting icon');
 		
@@ -122,6 +115,8 @@ Polymer({
 				break;
 			}
 		}
+
+		console.log(this.userSentences);
 
 		return retVal;
 	},

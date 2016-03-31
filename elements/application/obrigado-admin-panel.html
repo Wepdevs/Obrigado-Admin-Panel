@@ -1,6 +1,6 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
-<dom-module is="obrigado-admin-panel">
+<dom-module id="obrigado-admin-panel">
 
 <template>
 
@@ -64,10 +64,10 @@
 
 			<iron-pages id="ironpages" selected="0">
 				<div role="page" name="Login" order="1" icon="info">
-					<firebase-login id="login" location="[[location]]" user="{{authData}}" user-sentences="{{userSentences}}"></firebase-login>
+					<firebase-login id="login" location="[[location]]" user="{{authData}}" user-sentences="{{userSentences}}" on-logged-in="_handleLoggedIn"></firebase-login>
 				</div>
 				<div role="page" name="Languages" order="2" icon="language">
-					<languages-manager location="[[location]]" languages="{{languages}}"></languages-manager>
+					<languages-manager id="languagesElement" location="[[location]]" languages="{{languages}}"></languages-manager>
 				</div>
 				<div role="page" name="Categories" order="3" icon="maps:local-offer">
 					<categories-manager location="[[location]]"></categories-manager>
@@ -104,6 +104,10 @@ Polymer({
 
 	listeners: {
 		'obrigado': 'handleObrigado'
+	},
+
+	_handleLoggedIn: function(){
+		this.$.languagesElement._handleLoggedIn();
 	},
 
 	showLanguages: function(){

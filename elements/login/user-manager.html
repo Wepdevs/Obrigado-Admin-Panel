@@ -9,7 +9,7 @@
 <link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
 
 
-<dom-module is="user-manager">
+<dom-module id="user-manager">
 
 <template>
 
@@ -48,11 +48,28 @@
 		setObrigado: function(sentence){
 
 			var isLiked = false;
+			var toDelete = 0;
 
 			for(var i = 0; i < this.userSentences.length; i++){
+				if(this.userSentences[i]["firebaseKey"] == sentence.__firebaseKey__){
+					this.splice('userSentences', i, 1);
+					isLiked = true;
+					break;
+				}
+			}
+
+			if(!isLiked){
+				this.push('userSentences', {firebaseKey: sentence.__firebaseKey__});
+			}
+			this.notifyPath('userSentences', this.userSentences.slice());
+		},
+
+
+			/*for(var i = 0; i < this.userSentences.length; i++){
 
 			if(this.userSentences[i]["firebaseKey"] == sentence.__firebaseKey__){
 				isLiked = true;
+				toDelete = i;
 				break;
 				}
 			}
@@ -62,23 +79,25 @@
 
 			if(!isLiked){
 				console.info('adding Obrigado!');
-				ref.push({firebaseKey: sentence.__firebaseKey__});
+				this.push('userSentences', {firebaseKey: sentence.__firebaseKey__});
+				this.notifyPath('userSentences', this.userSentences.slice());
+				//ref.push({firebaseKey: sentence.__firebaseKey__});
+				//this.$.userSentencesRef.add({firebaseKey: sentence.__firebaseKey__});
 			}	
 			else{
-
-				ref.once("value", function(snapshot){
-
-					var key = snapshot.val();
-
-					for(valore in key){
-						if(key[valore]["firebaseKey"] == sentence.__firebaseKey__){
-							console.info('removing Obrigado!')
-							ref.child(valore).remove();
-						}
+				console.info('removing Obrigado!');
+				for(var j = 0; j < this.userSentences.length; j++){
+					if(this.userSentences[i]["firebaseKey"] == sentence.__firebaseKey__){
+						this.splice('userSentences', j, 1);
+						break;
 					}
-				});
-			}
-		},
+				}
+
+				this.notifyPath('userSentences', this.userSentences.slice());
+
+			}  */
+
+			
 
 
 		logSent: function(){

@@ -81,6 +81,8 @@
 
 				if (this.statusKnown && this.user){
 
+					this.fire('logged-in');
+
 					if(this.user.provider == "google"){
 						this.$.userManager.setGoogleLogin(); 
 					}
