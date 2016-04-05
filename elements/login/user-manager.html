@@ -37,7 +37,7 @@
 			}, 
 
 			userSentences: {
-				type: Object, 
+				type: Array, 
 				reflectToAttribute: true, 
 				notify: true
 			}
@@ -45,68 +45,32 @@
 		},
 
 
-		setObrigado: function(sentence){
+		/*setObrigado: function(sentence){
 
 			var isLiked = false;
-			var toDelete = 0;
+			console.log(this.userSentences);
+			// non funziona il cancella di una che ho inserito durante la sessione, l'inserisci sì, funziona sempre
+			// il secondo push da errore ma aggiunge, il terzo non va. 
 
 			for(var i = 0; i < this.userSentences.length; i++){
-				if(this.userSentences[i]["firebaseKey"] == sentence.__firebaseKey__){
-					this.splice('userSentences', i, 1);
+				if(this.userSentences[i].firebaseKey == sentence.__firebaseKey__){
+					this.arrayDelete('userSentences',this.userSentences[i]);
 					isLiked = true;
+					this.notifyPath('userSentences', this.userSentences.slice());
 					break;
 				}
 			}
 
 			if(!isLiked){
-				this.push('userSentences', {firebaseKey: sentence.__firebaseKey__});
-			}
-			this.notifyPath('userSentences', this.userSentences.slice());
-		},
-
-
-			/*for(var i = 0; i < this.userSentences.length; i++){
-
-			if(this.userSentences[i]["firebaseKey"] == sentence.__firebaseKey__){
-				isLiked = true;
-				toDelete = i;
-				break;
-				}
-			}
-
-			var path = this.location + 'Users/' + this.userData.uid.toString() + '/sentences/';
-			var ref = new Firebase(path);
-
-			if(!isLiked){
-				console.info('adding Obrigado!');
-				this.push('userSentences', {firebaseKey: sentence.__firebaseKey__});
-				this.notifyPath('userSentences', this.userSentences.slice());
-				//ref.push({firebaseKey: sentence.__firebaseKey__});
+				console.log('not found');
+				//this.push('userSentences', {firebaseKey: sentence.__firebaseKey__});
 				//this.$.userSentencesRef.add({firebaseKey: sentence.__firebaseKey__});
-			}	
-			else{
-				console.info('removing Obrigado!');
-				for(var j = 0; j < this.userSentences.length; j++){
-					if(this.userSentences[i]["firebaseKey"] == sentence.__firebaseKey__){
-						this.splice('userSentences', j, 1);
-						break;
-					}
-				}
-
+				this.userSentences.push({firebaseKey: sentence.__firebaseKey__});
 				this.notifyPath('userSentences', this.userSentences.slice());
-
-			}  */
-
+			}
 			
+		},  */
 
-
-		logSent: function(){
-			console.log(this.userSentences);
-
-			console.log(this.$.userSentencesRef.location);
-
-			console.log(this.userData.uid);
-		},
 
 		getAuthData: function(){
 			return this.userData;

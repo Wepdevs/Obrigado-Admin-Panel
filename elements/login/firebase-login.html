@@ -31,7 +31,6 @@
 		<paper-button on-tap="login" raised>ADMIN LOGIN</paper-button>
 		<paper-button on-tap="userLogin" raised>USER LOGIN</paper-button>
 		<paper-button on-tap="logout" raised>LOGOUT</paper-button>
-
 	</template>
 
 	<script>
@@ -52,18 +51,19 @@
 			    },
 
 			    userSentences: {
-			    	type: Object,
+			    	type: Array,
 			    	reflectToAttribute: true,
 			    	notify: true
 			    },
 
-			    location: {
-			    	type: String
-			    },
+			    location: String,
 
-			    name: {
-			    	type: String
-			    }
+			    name: String,
+
+			},
+
+			refshow: function(){
+				console.log(this.reference);
 			},
 
 			displayName: function(){
@@ -85,10 +85,12 @@
 
 					if(this.user.provider == "google"){
 						this.$.userManager.setGoogleLogin(); 
+						//window.location.reload()
 					}
 					else{
 						console.log("utente admin");
 						this.$.userManager.setAdminLogin(); 
+						//window.location.reload()
 					}
 					
 				}

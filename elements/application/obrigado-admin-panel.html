@@ -30,8 +30,9 @@
 
 	</style>
 
+
 	<paper-drawer-panel id="paperDrawerPanel">
-		<paper-scroll-header-panel drawer fixed>
+		<paper-header-panel drawer fixed>
 
 			<!--<paper-toolbar id="drawerToolbar">
 	          <span class="paper-font-title">Menu</span>
@@ -39,13 +40,11 @@
 
 	        <div id="drawerToolbar">MENU</div>
 
-	        <paper-button on-tap="showLanguages">show lanuages</paper-button>
-
 			<pages-menu id="ironmenu"></iron-pages-menu> 
 
-		</paper-scroll-header-panel>
+		</paper-header-panel>
 
-		 <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
+		 <paper-header-panel main id="headerPanelMain" condenses keep-condensed-header>
 
 			 	 <!-- Main Toolbar -->
 	       <paper-toolbar id="mainToolbar">  
@@ -64,19 +63,24 @@
 
 			<iron-pages id="ironpages" selected="0">
 				<div role="page" name="Login" order="1" icon="info">
-					<firebase-login id="login" location="[[location]]" user="{{authData}}" user-sentences="{{userSentences}}" on-logged-in="_handleLoggedIn"></firebase-login>
+					<data-controller location="{{location}}"></data-controller>
+
+				<!--	<firebase-login id="login" location="[[location]]" user="{{authData}}" user-sentences="{{userSentences}}" on-logged-in="_handleLoggedIn"></firebase-login>-->
 				</div>
 				<div role="page" name="Languages" order="2" icon="language">
-					<languages-manager id="languagesElement" location="[[location]]" languages="{{languages}}"></languages-manager>
+					<!--<languages-manager id="languagesElement" location="[[location]]" languages="{{languages}}"></languages-manager>-->
 				</div>
 				<div role="page" name="Categories" order="3" icon="maps:local-offer">
-					<categories-manager location="[[location]]"></categories-manager>
+					<!--<categories-manager location="[[location]]"></categories-manager>-->
 				</div>
 				<div role="page" name="Sentences" order="4" icon="communication:chat-bubble">
-					<sentences-manager location="[[location]]" user-sentences="{{userSentences}}"></sentences-manager>
+					<!--<sentences-manager location="[[location]]" user-sentences="{{userSentences}}"></sentences-manager>-->
+				</div>
+				<div role="page" name="Login" order="5" icon="info">
+					
 				</div>
 			</iron-pages> 
-		 </paper-scroll-header-panel>
+		 </paper-header-panel>
 
 	</paper-drawer-panel>
 
@@ -92,33 +96,26 @@ Polymer({
 	properties: {
 		location: String,
 
-		authData: {
-			type: Object
-		}, 
+		authData: Object,
 
 		userSentences: {
-			type: Object, 
+			type: Array, 
 			notify: true
 		}
 	},
 
-	listeners: {
+	/*listeners: {
 		'obrigado': 'handleObrigado'
-	},
+	},*/
 
 	_handleLoggedIn: function(){
 		this.$.languagesElement._handleLoggedIn();
 	},
 
-	showLanguages: function(){
-		console.log(this.userSentences);
-		//this.languages.slice();
-	},
-
-	handleObrigado: function(e){
+	/*handleObrigado: function(e){
 
 		this.$.login.setObrigado(e.detail.data);
-	},
+	},*/
 
 	attached: function(){
 

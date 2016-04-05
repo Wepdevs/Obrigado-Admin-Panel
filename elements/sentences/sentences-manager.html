@@ -40,7 +40,7 @@
 		<template is="dom-if" if="{{isCategorySelected(sentence, chosenCategory)}}">
 			<paper-item>
 				<span>{{sentence.italiano}}<span>
-				<paper-icon-button icon="{{hasObrigado(sentence.__firebaseKey__, userSentences)}}" on-tap="fireObrigado"></paper-icon-button>
+				<paper-icon-button icon="{{hasObrigado(sentence.__firebaseKey__, userSentences)}}" on-tap="setObrigado"></paper-icon-button>
 				<template is="dom-if" if="{{isAllSelected(chosenCategory)}}">
 					<span>({{sentence.category}})</span>
 				</template>
@@ -83,7 +83,8 @@ Polymer({
 		},
 
 		chosenCategory:{
-			notify: true
+			notify: true,
+			//value: "tutte"
 		},
 
 		location: {
@@ -95,7 +96,7 @@ Polymer({
 		}, 
 
 		userSentences: {
-			type: Object,
+			type: Array,
 			notify: true,
 			reflectToAttribute: true
 		}
@@ -104,7 +105,7 @@ Polymer({
 
 	hasObrigado: function(key, userSentences){
 
-		console.log('setting icon');
+		//console.log('setting icon');
 		
 		retVal = "thumb-up";
 
@@ -115,8 +116,6 @@ Polymer({
 				break;
 			}
 		}
-
-		console.log(this.userSentences);
 
 		return retVal;
 	},
@@ -138,10 +137,29 @@ Polymer({
 		this.$.sentencesRef.add(data);
 	}, 
 
-	fireObrigado: function(e){
+
+	setObrigado: function(e){
+
+			var key = e.model.sentence.__firebaseKey__;
+
+			for(var i = 0; i < this.userSentences.length; i++){
+				if(this.userSentences[i].firebaseKey == key){
+					this.splice('userSentences',i,1);
+					this.notifyPath('userSentences', this.userSentences.slice());
+					break;
+				}
+			}
+			
+			this.splice('userSentences',this.userSentences.length,0,{firebaseKey: key});
+			this.notifyPath('userSentences', this.userSentences.slice());
+	},
+
+
+
+	/*fireObrigado: function(e){
 
 		this.fire('obrigado', {data: e.model.sentence});
-	},
+	},*/
 
 	isCategorySelected: function(sentence, chosenCategory){
 
