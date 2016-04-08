@@ -1,11 +1,31 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 <dom-module id="data-import">
 <template>
   <iron-pages selected="0" id="iron-pages-import">
-    <div>One</div>
-    <div>Two</div>
-    <div>Three</div>
+    <div>
+        <h2>1. Select Firebase DataBase</h2>
+        <paper-input type="text" class="form-control" id="DBConn" value="https://popping-heat-2481.firebaseio.com/">{{location}}</paper-input>  
+    </div>
+    <div>
+        <h2>2. Databse Authentication</h2>
+        <paper-input label="User"  id="user" value="walter.miani@gmail.com"></paper-input>
+        <paper-input label="Password"  id="password" value="walter.miani@gmail.com"></paper-input>
+    </div>
+    <div>
+        <h2>3. Select JSON file to upload into database</h2>
+        <paper-input type="file" label="file"></paper-input>
+   </div>
+   <div>
+        <h2>4. Select in which branch of Firebase to upload</h2>
+   </div>
+   <div>
+        <h2>5. Insert into DB</h2>
+   </div>
+   <div>
+        <h2>6. Result</h2>
+   </div>
   </iron-pages>
   <paper-button on-tap="nextPage">NEXT</paper-button>
 </template>
@@ -14,6 +34,10 @@
     
     Polymer({
         is: "data-import",
+        
+        properties:{
+            location: String
+        },
         
         nextPage: function(){
             var pages = document.querySelector('#iron-pages-import');
