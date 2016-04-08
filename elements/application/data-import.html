@@ -30,8 +30,9 @@
         <h2>6. Result</h2>
    </div>
   </iron-pages>
-  <paper-button on-tap="nextPage">NEXT</paper-button>
   <paper-button on-tap="prevPage">PREV</paper-button>
+  <paper-button on-tap="nextPage">NEXT</paper-button>
+  
 </template>
     
 <script>
@@ -61,6 +62,8 @@
                     if(this.$.user.validate() && this.$.password.validate())
                         pages.selectNext();
                     break;
+                case 5:
+                    break;
                     default:
                         pages.selectNext();
             }
@@ -74,8 +77,11 @@
                     break;
                 default:
                     pages.selectPrevious();
-            }
-            
+            }   
+        },
+        
+        isTheEnd: function(){
+            return this.selected == 5;
         }
     });
 </script>
