@@ -1,0 +1,70 @@
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module is="pages-menu">
+
+<template>
+
+
+	<paper-menu class="list" attr-for-selected="data-route" selected="[[route]]">
+		<template is="dom-repeat" items="{{pages}}" as="page">
+			<paper-item>
+				<iron-icon icon="[[page.icon]]"></iron-icon>
+				<paper-button on-tap="goToPage">[[page.name]]</paper-button>
+			</paper-item>
+			
+		</template>
+	</paper-menu>
+
+
+	
+</template>
+
+<script>
+
+Polymer({
+
+	is: "pages-menu",
+
+	properties: {
+		pages: {
+			type: Array
+		}, 
+
+		pagesID: {
+			type: String, 
+			value : "ironpages"
+		}
+	},
+
+	registration: function(){
+
+		console.log("...Creating menu...");
+
+		var docPages = document.querySelectorAll('[role="page"]');
+
+		var pages = new Array();
+		var order = 1;
+
+		for(var i = 0; i < docPages.length; i++){
+
+			var page = {order:order, name:docPages[i].getAttribute("name"), icon:docPages[i].getAttribute("icon")};
+			order += 1;
+			pages.push(page);
+		}  
+
+		this.pages = pages;
+	},  
+
+	goToPage: function(e){
+		var pages = document.querySelector('[id=' + this.pagesID + ']');
+
+		pages.select(e.model.page.order - 1);
+	}
+
+});
+
+</script>
+
+
+</dom-module>

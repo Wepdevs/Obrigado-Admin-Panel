@@ -1,0 +1,146 @@
+<link rel="import" href="../../bower_components/firebase-element/firebase-collection.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
+
+<dom-module id="user-manager">
+
+<template>
+
+    <firebase-collection id="userSentencesRef"
+                         location="https://popping-heat-2481.firebaseio.com/Users/{{userData.uid}}/sentences"
+                         data = "{{userSentences}}">
+    </firebase-collection>  
+</template>
+
+<script>
+
+	Polymer({
+
+		is: "user-manager", 
+
+		properties: {
+		
+			userData: {
+				type: Object,
+				value: { displayName: "Anonymous"},
+				reflectToAttribute: true
+			},
+			location: {
+				type: String
+			}, 
+
+			userSentences: {
+				type: Array, 
+				reflectToAttribute: true, 
+				notify: true
+			}
+
+		},
+
+
+		/*setObrigado: function(sentence){
+
+			var isLiked = false;
+			console.log(this.userSentences);
+			// non funziona il cancella di una che ho inserito durante la sessione, l'inserisci sì, funziona sempre
+			// il secondo push da errore ma aggiunge, il terzo non va. 
+
+			for(var i = 0; i < this.userSentences.length; i++){
+				if(this.userSentences[i].firebaseKey == sentence.__firebaseKey__){
+					this.arrayDelete('userSentences',this.userSentences[i]);
+					isLiked = true;
+					this.notifyPath('userSentences', this.userSentences.slice());
+					break;
+				}
+			}
+
+			if(!isLiked){
+				console.log('not found');
+				//this.push('userSentences', {firebaseKey: sentence.__firebaseKey__});
+				//this.$.userSentencesRef.add({firebaseKey: sentence.__firebaseKey__});
+				this.userSentences.push({firebaseKey: sentence.__firebaseKey__});
+				this.notifyPath('userSentences', this.userSentences.slice());
+			}
+			
+		},  */
+
+
+		getAuthData: function(){
+			return this.userData;
+		},
+
+		setGoogleLogin: function(){
+
+			console.log('inizializing user profile');
+
+			var ref = new Firebase(this.location + 'Users/');
+
+			// preparo un profilo iniziale con solo una frase fake
+			var sentences = [{vuoto: 0}];
+			var data = {name: this.userData.google.displayName, sentences: sentences, role: "user"};
+			var uid = ref.getAuth().uid;
+
+			// se l'utente è già in db, non faccio niente
+			ref.once("value", function(snapshot){
+				
+				if(!snapshot.child(uid).exists()){
+				console.log('user not found, setting new profile');
+				ref.child(ref.getAuth().uid.toString()).set(data);
+				}
+				else{
+					console.log('user found!');
+				}
+			});
+				
+		},
+
+		setAdminLogin: function(){
+
+			console.log('inizializing admin user profile');
+
+			var ref = new Firebase(this.location + 'Users/');
+
+			// preparo un profilo iniziale con solo una frase fake
+			var sentences = [{vuoto: 0}];
+			var data = {name: this.userData.uid, sentences: sentences, role: "admin"};
+			var uid = ref.getAuth().uid;
+
+			// se l'utente è già in db, non faccio niente
+			ref.once("value", function(snapshot){
+				
+				if(!snapshot.child(uid).exists()){
+				console.log('admin not found, setting new profile');
+				ref.child(ref.getAuth().uid.toString()).set(data);
+				}
+				else{
+					console.log('admin found!');
+				}
+			});
+				
+		},
+
+		setObrigadoOnSentence: function(firebaseKey){
+			console.log("adding Obrigado to sentence:" + firebaseKey);
+		},
+		removeObrigadoFromSentence: function(firebaseKey){
+			console.log("removing Obrigado from sentence:" + firebaseKey);
+		},
+		getDisplayName: function(){
+
+			console.log("retrieving display name");
+
+			console.log(this.userData);
+			return this.userData.google.displayName;
+		}
+	});
+
+</script>
+
+</dom-module>

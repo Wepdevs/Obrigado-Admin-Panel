@@ -1,0 +1,131 @@
+<link rel="import" href="../../bower_components/firebase-element/firebase-collection.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
+
+<dom-module id="data-controller">
+
+<template>
+
+    <firebase-collection id="languagesRef"
+                             location="{{location}}Languages/"
+                             data = "{{languages}}"
+                             query="{{query}}">
+    </firebase-collection>
+
+    <firebase-auth id="auth" provider="password"
+					location="{{location}}Languages/"
+					status-known="{{statusKnown}}"
+					user="{{user}}"
+					on-error="loginError"
+					ref="{{authRef}}">
+		</firebase-auth>
+
+
+    <template is="dom-repeat" items="{{languages}}" as="language">
+		<div>{{language.name}} </div>
+    </template> 
+
+    <paper-button on-tap="login" raised>LOGIN</paper-button>
+    <paper-button on-tap="logout" raised>LOGOUT</paper-button>
+    <paper-button on-tap="showQuery" raised>query</paper-button>
+    <paper-button on-tap="showAuth" raised>auth</paper-button>
+    <paper-button on-tap="showLocation" raised>loc</paper-button>
+    <paper-label  raised>{{user.uid}}</paper-label>
+
+</template>
+
+<script>
+
+	Polymer({
+
+		is: "data-controller", 
+
+		properties: {
+				languages: Array,
+				location: String,
+				user: {
+			        type: Object,
+			        notify: true, 
+			    	observer: '_userChanged'
+			        
+			    },
+				authRef: {
+					type: Object, 
+					notify: true
+				},
+                query: {
+                    type: Object,
+                    notify: true,
+                    computed: '_computeQuery(location)',
+                    observer: '_queryChanged'
+                },
+		},
+        
+        _computeQuery: function(location){
+            var query;
+            query = new Firebase(location);
+            return query;
+        },
+        
+        _queryChanged: function(){
+            console.log('query cambiata');
+        },
+
+		showLocation: function(){
+			console.log(this.location);
+		},
+
+		logout: function(){
+
+				this.$.auth.logout();
+                
+                console.log('disconnesso!');
+		},
+
+		login: function(){
+			this.$.auth.login({email: 'walter.miani@gmail.com', password: 'walter.miani@gmail.com'});
+            
+            this.location = this.location;
+            
+            this.notifyPath('location', this.location.slice());  
+		},
+
+		showQuery: function(){
+			console.log(this.query);
+		}, 
+
+		_queryChanged: function(){
+			console.log('query changed: ')
+			console.log(this.query);
+		}, 
+
+		_userChanged: function(){
+
+				if (this.statusKnown && this.user){
+
+					console.log('connesso: ');
+					console.log(this.user);
+					
+				}
+		},
+
+		showAuth: function(){
+			console.log(this.authRef);
+		}
+
+		
+
+
+		
+	});
+
+</script>
+
+</dom-module>

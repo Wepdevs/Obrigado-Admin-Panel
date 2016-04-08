@@ -1,0 +1,15 @@
+﻿{
+    "prova1": {
+        "category": "cibo",
+        "english": "i want a beer",
+        "francois": "je voudre du boire",
+        "italiano": "voglio una birra"
+    },
+    "prova2": {
+        "category": "cibo",
+        "english": "i want a hamburger",
+        "francois": "je voudre un panin",
+        "furlan": "o voi di mangja",
+        "italiano": "voglio un panino"
+    }
+}

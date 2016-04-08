@@ -1,22 +1,22 @@
 <link rel="import" href="../../bower_components/firebase-element/firebase-collection.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 
-<dom-module is="sentences-manager">
+<dom-module id="sentences-manager">
 
 <template>
 
 	<firebase-collection id="categoryRef"
-                         location="https://popping-heat-2481.firebaseio.com/Categories/"
+                         location="[[location]]Categories/"
                          data = "{{categories}}">
     </firebase-collection>
 
     <firebase-collection id="sentencesRef"
-                         location="https://popping-heat-2481.firebaseio.com/Sentences/"
+                         location="[[location]]Sentences/"
                          data = "{{sentences}}">
     </firebase-collection>
 
     <firebase-collection id="languagesRef"
-                         location="https://popping-heat-2481.firebaseio.com/Languages/"
+                         location="[[location]]Languages/"
                          data = "{{languages}}">
     </firebase-collection>
 
@@ -36,12 +36,11 @@
 
 	<paper-button raised on-tap="addSentence">ADD SENTENCE</paper-button>
 
-	<div>SENTENCES LIST X CATEGORY SELECTED</div>
-
 	<template is="dom-repeat" items="{{sentences}}" as="sentence">
 		<template is="dom-if" if="{{isCategorySelected(sentence, chosenCategory)}}">
-			<paper-item >
+			<paper-item>
 				<span>{{sentence.italiano}}<span>
+				<paper-icon-button icon="{{hasObrigado(sentence.__firebaseKey__, userSentences)}}" on-tap="setObrigado"></paper-icon-button>
 				<template is="dom-if" if="{{isAllSelected(chosenCategory)}}">
 					<span>({{sentence.category}})</span>
 				</template>
@@ -50,12 +49,19 @@
 	</template>
 
 
+	<!--<paper-button raised on-tap="logUserSentences">user sentences</paper-button> -->
+
+
 </template>
 
 
 <script>
 
+var retVal = "";
+
 Polymer({
+
+
 
 	is: 'sentences-manager',
 
@@ -77,8 +83,41 @@ Polymer({
 		},
 
 		chosenCategory:{
-			notify: true
+			notify: true,
+			//value: "tutte"
+		},
+
+		location: {
+			type: String
+		},
+
+		uid: {
+			type: String
+		}, 
+
+		userSentences: {
+			type: Array,
+			notify: true,
+			reflectToAttribute: true
 		}
+
+	},
+
+	hasObrigado: function(key, userSentences){
+
+		//console.log('setting icon');
+		
+		retVal = "thumb-up";
+
+		for(var i = 0; i< this.userSentences.length; i++){
+
+			if(this.userSentences[i]["firebaseKey"] == key){
+				retVal = "thumb-down";
+				break;
+			}
+		}
+
+		return retVal;
 	},
 
 	addSentence: function(){
@@ -98,6 +137,30 @@ Polymer({
 		this.$.sentencesRef.add(data);
 	}, 
 
+
+	setObrigado: function(e){
+
+			var key = e.model.sentence.__firebaseKey__;
+
+			for(var i = 0; i < this.userSentences.length; i++){
+				if(this.userSentences[i].firebaseKey == key){
+					this.splice('userSentences',i,1);
+					this.notifyPath('userSentences', this.userSentences.slice());
+					break;
+				}
+			}
+			
+			this.splice('userSentences',this.userSentences.length,0,{firebaseKey: key});
+			this.notifyPath('userSentences', this.userSentences.slice());
+	},
+
+
+
+	/*fireObrigado: function(e){
+
+		this.fire('obrigado', {data: e.model.sentence});
+	},*/
+
 	isCategorySelected: function(sentence, chosenCategory){
 
 		if(chosenCategory === undefined)
@@ -109,7 +172,7 @@ Polymer({
 	}, 
 
 	isAllSelected: function(chosenCategory){
-		return chosenCategory =="tutte";
+		return chosenCategory == "tutte";
 	}
 
 });

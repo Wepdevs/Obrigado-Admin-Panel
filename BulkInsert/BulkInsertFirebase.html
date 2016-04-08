@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="../../Scripts/jquery-1.10.2.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <script src="BulkInsertFirebase.js"></script>
+
+
+    <title>Bulk Insert Firebase</title>
+
+    <meta charset="utf-8" />
+</head>
+<body onload="checkFileAPI();">
+
+    <table border="1">
+        <tr>
+            <td valign="top">
+                <h2>1. Select Firebase DataBase</h2>
+                <input type="text" class="form-control" id="DBConn" value="https://popping-heat-2481.firebaseio.com/">
+            </td>
+            <td valign="top">
+                <h2>2. Databse Authentication</h2>
+                User: <input type="text" class="form-control" id="User" value="nelson.gomes.75@gmail.com">
+                Password: <input type="text" class="form-control" id="Password" value="nelson.gomes.75@gmail.com">
+                <input type="button" value="read firebase" onclick="displayChilds(document.getElementById('DBConn').value,
+                                                document.getElementById('User').value,
+                                                document.getElementById('Password').value);" />
+                <div id="UserFirebase">
+                    ...
+                </div>
+                <div id="MainFirebase">
+                    ...
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <h2>3. Select JSON file to upload into database</h2>
+                <input type="file" onchange='readText(this)' />
+                <br />
+                <hr />
+                <h3>Contents of the json file:</h3>
+                <div id="main">
+                    ...
+                </div>
+            </td>
+            <td valign="top">
+                <h2>4.Select in which branch of Firebase to upload</h2>
+                <select class="form-control" id="selectBranch">
+                    <option>test</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <h2>5.Insert into DB</h2>
+                <input type="button" value="Insert firebase" onclick="Insert();" />
+            </td>
+            <td valign="top">
+                <h2>6.Result</h2>
+                <div id="result">
+                    ...
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

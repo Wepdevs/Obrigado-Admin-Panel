@@ -6,7 +6,7 @@
 <link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
 
 
-<dom-module is="categories-manager">
+<dom-module id="categories-manager">
 
 <template>
 
@@ -25,12 +25,12 @@
 </style>
 
 	<firebase-collection id="ref"
-                             location="https://popping-heat-2481.firebaseio.com/Categories/"
+                             location="[[location]]Categories/"
                              data = "{{categories}}">
     </firebase-collection>
 
     <firebase-collection id="lang"
-                             location="https://popping-heat-2481.firebaseio.com/Languages/"
+                             location="[[location]]Languages/"
                              data = "{{languages}}">
     </firebase-collection>
 
@@ -114,18 +114,17 @@
 			chosenCategory: {
 				type: Object,
 				value: {"italiano": "categoria"},
-				notify: true,
-				observer: '_chosenCategoryChanged'
+				notify: true
 			},
 
 			hiddenCategoryDetail:{
 				type: Boolean,
 				value: true
-			}
-		}, 
+			}, 
 
-		_chosenCategoryChanged: function(newValue){
-			//console.log(this.chosenCategory);
+			location: {
+				type: String
+			}
 		},
 
 		openCreate: function(){
@@ -141,7 +140,7 @@
 		editDetail: function(e){
 
 
-			var location = 'https://popping-heat-2481.firebaseio.com/Categories/' + e.model.category.__firebaseKey__ + '/' + e.model.language.name;
+			var location = this.location + 'Categories/' + e.model.category.__firebaseKey__ + '/' + e.model.language.name;
 
 			var ref = new Firebase(location);
 			var data = "";
@@ -167,7 +166,7 @@
 				var firebaseKey = document.getElementById("editDetailInputOldKey").value;
 				var language = document.getElementById('editDetailInputLanguage').value;
 				
-				var location = 'https://popping-heat-2481.firebaseio.com/Categories/' + firebaseKey;
+				var location = this.location + 'Categories/' + firebaseKey;
 
 				var entry = {};
 
@@ -182,7 +181,7 @@
 
 		getLanguage: function(cat, lang){
 
-			var location = 'https://popping-heat-2481.firebaseio.com/Categories/' + cat.__firebaseKey__ + '/' + lang.name;
+			var location = this.location + 'Categories/' + cat.__firebaseKey__ + '/' + lang.name;
 
 			var data = "";
 			var myDataRef= new Firebase(location);

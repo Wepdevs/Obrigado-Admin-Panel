@@ -1,44 +1,42 @@
 <link rel="import" href="../../bower_components/firebase-element/firebase-auth.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../elements/languages/languages-manager.html">
+<link rel="import" href="user-manager.html">
 
 
 <dom-module id="firebase-login">
 
 	<template>
+
+		<user-manager id="userManager" location="{{location}}" user-data="{{user}}" user-sentences="{{userSentences}}"></user-manager>
+
 		<firebase-auth id="auth" provider="password"
-					location="https://popping-heat-2481.firebaseio.com/Languages/"
+					location="{{location}}"
 					status-known="{{statusKnown}}"
 					user="{{user}}"
 					on-error="loginError">
 		</firebase-auth>
-
-		<firebase-collection id="usersRef"
-                             location="https://popping-heat-2481.firebaseio.com/Users/"
-                             data = "{{users}}">
-    </firebase-collection>
-
-		<paper-button on-tap="userLogin">USER LOGIN</paper-button>
 	
 		<h3>Login status:</h3>
         <p>{{computeLoginStatus(statusKnown, user)}}</p>
 
         <h3>User ID:</h3>
    	    <pre>{{user.uid}}</pre>
-   	    <pre>{{authData.google.displayName}}</pre>
-   	    <img src="{{authData.google.profileImageURL}}"></img>
+   	    <pre>{{user.google.displayName}}</pre>
+   	    <!--<img src="{{user.google.profileImageURL}}"></img>-->
 
    	    <paper-input label="username" id="username"></paper-input>
-
    	    <paper-input label="password" type="password" id="password"></paper-input>
-
 
 		<paper-button on-tap="login" raised>ADMIN LOGIN</paper-button>
 		<paper-button on-tap="userLogin" raised>USER LOGIN</paper-button>
 		<paper-button on-tap="logout" raised>LOGOUT</paper-button>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> nelson
 	</template>
 
 	<script>
@@ -49,27 +47,66 @@
 
 				statusKnown: {
        	 			type: Boolean,
-       	 			notify: true, 
-			    	observer: '_statusChanged'
+       	 			notify: true 
       			},
       			user: {
 			        type: Object,
+			        notify: true, 
+			    	observer: '_userChanged'
 			        
 			    },
-			    users: {
-			    	type: Object
-			    }, 
-			    authData: {
-			    	type: Object, 
 
-			    }
+			    userSentences: {
+			    	type: Array,
+			    	reflectToAttribute: true,
+			    	notify: true
+			    },
+
+			    location: String,
+
+			    name: String,
+
 			},
 
+			refshow: function(){
+				console.log(this.reference);
+			},
+
+<<<<<<< HEAD
 			_statusChanged: function(){
 				this.fire('event-logged', {
 		            message: 'hello'
 		          });
+=======
+			displayName: function(){
 
+				this.name = this.$.userManager.getDisplayName(); 
+				
+			},
+
+			getAuthData: function(){
+
+				return this.user;
+			},
+
+			_userChanged: function(){
+
+				if (this.statusKnown && this.user){
+
+					this.fire('logged-in');
+>>>>>>> nelson
+
+					if(this.user.provider == "google"){
+						this.$.userManager.setGoogleLogin(); 
+						//window.location.reload()
+					}
+					else{
+						console.log("utente admin");
+						this.$.userManager.setAdminLogin(); 
+						//window.location.reload()
+					}
+					
+				}
 			},
 
 			login: function(){
@@ -111,9 +148,15 @@
 					console.log("Authenticated successfully with payload:", authData.google.displayName);
 				  }
 				});
+<<<<<<< HEAD
+=======
+		    },
+
+		    setObrigado: function(sentence){
+		    	this.$.userManager.setObrigado(sentence);
+
+>>>>>>> nelson
 		    }
-
-
 		});
 
 	</script>

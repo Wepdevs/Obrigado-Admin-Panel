@@ -25,7 +25,7 @@
 </style>
 
 	<firebase-collection id="ref"
-                             location="https://popping-heat-2481.firebaseio.com/Languages/"
+                             location="{{location}}Languages/"
                              data = "{{languages}}">
     </firebase-collection>
 
@@ -71,11 +71,21 @@
 		properties: {
 
 			languages: {
+<<<<<<< HEAD
 				type: Object, 
 				notify: true
 			}
 		},
+=======
+				type: Array, 
+				notify: true,
+				reflectToAttribute: true
+			}, 
+>>>>>>> nelson
 
+			location: String
+		},
+		
 		editLanguage: function(e){
 
 			document.getElementById('editLanguageInput').value = e.model.language.name;
@@ -83,6 +93,17 @@
 			document.getElementById('editLanguageInputOldKey').value = e.model.language.__firebaseKey__;
 			this.$.editLanguageDialog.open();
 
+		},
+
+		_handleLoggedIn: function(){
+			this.notifyPath('languages', this.languages.slice());
+		},
+
+		fireObrigado: function(e){
+
+			console.log(e.model.language);
+
+			this.fire('obrigado', {data: e.model.language});
 		},
 
 		openDialog: function(){

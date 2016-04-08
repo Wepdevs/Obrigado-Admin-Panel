@@ -1,0 +1,43 @@
+{
+  "-KB8U9tg0YDDSjzfbw7K" : {
+    "category" : "cibo",
+    "english" : "i want a beer",
+    "francois" : "je voudre du boire",
+    "italiano" : "voglio una birra"
+  },
+  "-KBPCjLmILdW4z61cWTd" : {
+    "category" : "cibo",
+    "english" : "i want a hamburger",
+    "francois" : "je voudre un panin",
+    "furlan" : "o voi di mangja",
+    "italiano" : "voglio un panino"
+  },
+  "-KBPPhJFDYU18ZonkNLS" : {
+    "category" : "Lavoro",
+    "english" : "i want work",
+    "francois" : "je voudre travaille",
+    "furlan" : "i voi lavura",
+    "italiano" : "voglio lavorare"
+  },
+  "-KBPPo0LkIAKrhT1qsi9" : {
+    "category" : "Lavoro",
+    "english" : "where is the boss",
+    "francois" : "ou est le chef",
+    "furlan" : "dula isal al mestri?",
+    "italiano" : "dove xe el capo"
+  },
+  "-KBPPyENcvbQXApX8qLA" : {
+    "category" : "scuola",
+    "english" : "where is the school",
+    "francois" : "ou est l ecole",
+    "furlan" : "dula isal le scuele?",
+    "italiano" : "dove xe la scola?"
+  },
+  "-KBPQ3Oyycuew3LU8_uq" : {
+    "category" : "scuola",
+    "english" : "how is the teacher?",
+    "francois" : "comment est le mestre?",
+    "furlan" : "ce mut isal le mestre?",
+    "italiano" : "come xe la maestra?"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "rules": {
+    ".read": "auth !== null && (auth.provider === 'google' || auth.provider === 'password')",
+    
+     "Users": {
+      "$user_id": {
+        ".write": "$user_id === auth.uid"
+      } 
+    }, 
+    
+    "Categories":{".write": "auth !== null && auth.provider === 'password'"},
+    "Languages":{".write": "auth !== null && auth.provider === 'password'"},
+    "Sentences":{".write": "auth !== null && auth.provider === 'password'"}
+  }
+}
