@@ -3,6 +3,16 @@
 
 <dom-module id="data-import">
 <template>
+    
+  <style is="custom-style">
+      #iron-pages-import{
+          height: 300px;
+      }
+      paper-input-container#loginError{
+          --paper-input-container-input-color: red;
+      }
+  </style>  
+  
   <iron-pages selected="{{selected}}" id="iron-pages-import">
     <div>
         <h2>1. Select Firebase DataBase</h2>
@@ -11,10 +21,17 @@
     </div>
     <div>
         <h2>2. Databse Authentication</h2>
-        <paper-input label="User"  id="user" value="{{user}}"
+        <paper-input label="Email"  id="user" value="{{user}}"
         error-message="needs some text" required auto-validate></paper-input>
         <paper-input label="Password"  id="password" value="{{password}}"
         error-message="needs some text" required auto-validate></paper-input>
+        <!--<paper-input label="login error" id="loginError"></paper-input>-->
+        <paper-input-container id="loginError">
+        <!--<label>Login error</label>-->
+        <input is="iron-input">
+        </paper-input-container>
+        
+        
     </div>
     <div>
         <h2>3. Select JSON file to upload into database</h2>
@@ -30,8 +47,8 @@
         <h2>6. Result</h2>
    </div>
   </iron-pages>
-  <paper-button on-tap="prevPage">PREV</paper-button>
-  <paper-button on-tap="nextPage">NEXT</paper-button>
+  <paper-button on-tap="prevPage" hidden$="{{_computeHiddenPrev(selected)}}">PREV</paper-button>
+  <paper-button on-tap="nextPage" hidden$="{{_computeHiddenNext(selected)}}">NEXT</paper-button>
   
 </template>
     
@@ -43,24 +60,54 @@
         properties:{
             location: String,
             user: String,
+            ref: Object,
             password: String,
             selected: {
-                type: String, 
-                value: "0"
+                type: Number, 
+                value: 0
             }
         },
         
         nextPage: function(){
             var pages = document.querySelector('#iron-pages-import');
-            
+            var errorText = document.querySelector('#loginError input');
+           
             switch(this.selected){
                 case 0: 
                     if(this.$.DBConn.validate())
+                    this.ref = new Firebase(this.location);
                         pages.selectNext();
                     break;
                 case 1:
-                    if(this.$.user.validate() && this.$.password.validate())
-                        pages.selectNext();
+                    if(this.$.user.validate() && this.$.password.validate()){
+                        this.ref.authWithPassword({
+                        email    : this.user,
+                        password : this.password
+                        }, function(error, authData) {
+                            if (error) {
+                                switch (error.code) {
+                                case "INVALID_EMAIL":
+                                    //console.log("The specified user account email is invalid.");
+                                    errorText.value = "The specified user account email is invalid.";
+                                    break;
+                                case "INVALID_PASSWORD":
+                                    //console.log("The specified user account password is incorrect.");
+                                    errorText.value = "The specified user account password is incorrect."
+                                    break;
+                                case "INVALID_USER":
+                                    //console.log("The specified user account does not exist.");
+                                    errorText.value = "The specified user account does not exist."
+                                    break;
+                                default:
+                                    //console.log("Error logging user in:", error);
+                                    loginError = "Error logging user in";
+                                }
+                            } else {
+                                console.log("Authenticated successfully!");
+                                pages.selectNext();
+                            }
+                        });
+                    } 
                     break;
                 case 5:
                     break;
@@ -80,8 +127,11 @@
             }   
         },
         
-        isTheEnd: function(){
+        _computeHiddenNext: function(){
             return this.selected == 5;
+        },
+        _computeHiddenPrev: function(){
+            return this.selected == 0;
         }
     });
 </script>
