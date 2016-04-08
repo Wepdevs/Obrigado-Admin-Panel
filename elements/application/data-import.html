@@ -1,0 +1,26 @@
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="data-import">
+<template>
+  <iron-pages selected="0" id="iron-pages-import">
+    <div>One</div>
+    <div>Two</div>
+    <div>Three</div>
+  </iron-pages>
+  <paper-button on-tap="nextPage">NEXT</paper-button>
+</template>
+    
+<script>
+    
+    Polymer({
+        is: "data-import",
+        
+        nextPage: function(){
+            var pages = document.querySelector('#iron-pages-import');
+            pages.selectNext();
+        }
+    });
+</script>
+    
+    
+</dom-module>
