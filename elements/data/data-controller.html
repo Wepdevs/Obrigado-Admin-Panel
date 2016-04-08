@@ -36,6 +36,8 @@
     <paper-button on-tap="logout" raised>LOGOUT</paper-button>
     <paper-button on-tap="showQuery" raised>query</paper-button>
     <paper-button on-tap="showAuth" raised>auth</paper-button>
+    <paper-button on-tap="showLocation" raised>loc</paper-button>
+    <paper-label  raised>{{user.uid}}</paper-label>
 
 </template>
 
@@ -54,17 +56,27 @@
 			    	observer: '_userChanged'
 			        
 			    },
-				query: {
-					type: Object, 
-					notify: true, 
-					observer: '_queryChanged'
-				},
 				authRef: {
 					type: Object, 
-					notify: true, 
-					observer: '_authRefChanged'
-				}
+					notify: true
+				},
+                query: {
+                    type: Object,
+                    notify: true,
+                    computed: '_computeQuery(location)',
+                    observer: '_queryChanged'
+                },
 		},
+        
+        _computeQuery: function(location){
+            var query;
+            query = new Firebase(location);
+            return query;
+        },
+        
+        _queryChanged: function(){
+            console.log('query cambiata');
+        },
 
 		showLocation: function(){
 			console.log(this.location);
@@ -73,19 +85,16 @@
 		logout: function(){
 
 				this.$.auth.logout();
-
-				
+                
+                console.log('disconnesso!');
 		},
 
 		login: function(){
 			this.$.auth.login({email: 'walter.miani@gmail.com', password: 'walter.miani@gmail.com'});
-			//var ref = new Firebase(this.location);
-			/*this.query.authWithPassword({
-					  email    : 'walter.miani@gmail.com',
-					  password : 'walter.miani@gmail.com'
-					});*/
-
-			//this.$.languagesRef.add({prova: 1});  
+            
+            this.location = this.location;
+            
+            this.notifyPath('location', this.location.slice());  
 		},
 
 		showQuery: function(){

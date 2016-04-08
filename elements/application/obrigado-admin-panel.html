@@ -27,7 +27,7 @@
 	.primary-text-color    { color: #212121; }
 	.secondary-text-color  { color: #727272; }
 	.divider-color         { border-color: #B6B6B6; }
-
+    
 	</style>
 
 
@@ -52,7 +52,7 @@
 	          <span class="flex"></span> 
 
 	          <!-- Toolbar icons -->
-	       <!-- <paper-icon-button icon="refresh"></paper-icon-button> 
+	        <!--<paper-icon-button icon="refresh"></paper-icon-button> 
 	          <paper-icon-button icon="search"></paper-icon-button>  -->
 
 	          <!-- Application name -->
@@ -63,11 +63,10 @@
 
 			<iron-pages id="ironpages" selected="0">
 				<div role="page" name="Login" order="1" icon="info">
-					<!--<data-controller location="{{location}}"></data-controller> -->
-
-					<firebase-login id="login" location="[[location]]" user="{{authData}}" user-sentences="{{userSentences}}" on-logged-in="_handleLoggedIn"></firebase-login>
+					<data-controller location="{{location}}"></data-controller> 
+					<!--<firebase-login id="login" location="[[location]]" user="{{authData}}" user-sentences="{{userSentences}}" on-logged-in="_handleLoggedIn"></firebase-login>-->
 				</div>
-				<div role="page" name="Languages" order="2" icon="language">
+				<!--<div role="page" name="Languages" order="2" icon="language">
 					<languages-manager id="languagesElement" location="[[location]]" languages="{{languages}}"></languages-manager>
 				</div>
 				<div role="page" name="Categories" order="3" icon="maps:local-offer">
@@ -77,8 +76,7 @@
 					<sentences-manager location="[[location]]" user-sentences="{{userSentences}}"></sentences-manager>
 				</div>
 				<div role="page" name="Login" order="5" icon="info">
-					
-				</div>
+				</div>-->
 			</iron-pages> 
 		 </paper-header-panel>
 
@@ -104,18 +102,9 @@ Polymer({
 		}
 	},
 
-	/*listeners: {
-		'obrigado': 'handleObrigado'
-	},*/
-
 	_handleLoggedIn: function(){
 		this.$.languagesElement._handleLoggedIn();
 	},
-
-	/*handleObrigado: function(e){
-
-		this.$.login.setObrigado(e.detail.data);
-	},*/
 
 	attached: function(){
 
