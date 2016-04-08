@@ -1,0 +1,15 @@
+{
+  "key1" : {
+    "category" : "scuola",
+    "english" : "I need to cross the road",
+    "francois" : "j'ai besoin de traverser la rue",
+    "italiano" : "Ho bisogno di attraversare la strada"
+	},
+  "key2" : {
+    "category" : "cibo",
+    "english" : "i want a hamburger",
+    "francois" : "je voudre un panin",
+    "furlan" : "o voi di mangja",
+    "italiano" : "voglio un panino"
+  }
+}
