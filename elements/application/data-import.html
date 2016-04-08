@@ -3,15 +3,18 @@
 
 <dom-module id="data-import">
 <template>
-  <iron-pages selected="0" id="iron-pages-import">
+  <iron-pages selected="{{selected}}" id="iron-pages-import">
     <div>
         <h2>1. Select Firebase DataBase</h2>
-        <paper-input type="text" class="form-control" id="DBConn" value="https://popping-heat-2481.firebaseio.com/">{{location}}</paper-input>  
+        <paper-input  id="DBConn" value="{{location}}"
+        error-message="needs some text" required auto-validate>{{location}}</paper-input>  
     </div>
     <div>
         <h2>2. Databse Authentication</h2>
-        <paper-input label="User"  id="user" value="walter.miani@gmail.com"></paper-input>
-        <paper-input label="Password"  id="password" value="walter.miani@gmail.com"></paper-input>
+        <paper-input label="User"  id="user" value="{{user}}"
+        error-message="needs some text" required auto-validate></paper-input>
+        <paper-input label="Password"  id="password" value="{{password}}"
+        error-message="needs some text" required auto-validate></paper-input>
     </div>
     <div>
         <h2>3. Select JSON file to upload into database</h2>
@@ -28,6 +31,7 @@
    </div>
   </iron-pages>
   <paper-button on-tap="nextPage">NEXT</paper-button>
+  <paper-button on-tap="prevPage">PREV</paper-button>
 </template>
     
 <script>
@@ -36,12 +40,42 @@
         is: "data-import",
         
         properties:{
-            location: String
+            location: String,
+            user: String,
+            password: String,
+            selected: {
+                type: String, 
+                value: "0"
+            }
         },
         
         nextPage: function(){
             var pages = document.querySelector('#iron-pages-import');
-            pages.selectNext();
+            
+            switch(this.selected){
+                case 0: 
+                    if(this.$.DBConn.validate())
+                        pages.selectNext();
+                    break;
+                case 1:
+                    if(this.$.user.validate() && this.$.password.validate())
+                        pages.selectNext();
+                    break;
+                    default:
+                        pages.selectNext();
+            }
+        },
+        
+        prevPage: function(){
+            var pages = document.querySelector('#iron-pages-import');
+            
+            switch(this.selected){
+                case 0: 
+                    break;
+                default:
+                    pages.selectPrevious();
+            }
+            
         }
     });
 </script>
