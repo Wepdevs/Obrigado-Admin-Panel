@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 
 <dom-module id="data-import">
 <template>
@@ -39,6 +40,13 @@
    </div>
    <div>
         <h2>4. Select in which branch of Firebase to upload</h2>
+        <paper-dropdown-menu label="Branches">
+            <paper-menu class="dropdown-content" id="branchesMenu" selected="{{chosenBranch}}">
+                <template is="dom-repeat" items="{{branches}}" as="branch">
+                    <paper-item>[[branch.name]]</paper-item>
+                </template>
+            </paper-menu>
+	   </paper-dropdown-menu>
    </div>
    <div>
         <h2>5. Insert into DB</h2>
@@ -59,13 +67,57 @@
         
         properties:{
             location: String,
-            user: String,
+            user: {
+                type: String,
+               value: "walter.miani@gmail.com"
+            },
             ref: Object,
-            password: String,
+            password: {
+                type: String,
+               value: "walter.miani@gmail.com"
+            },
+            branches: {
+                type: Object,
+                value: [] 
+                //computed: 'getBranches(ref)'
+            },
+            chosenBranch: Object,
             selected: {
                 type: Number, 
                 value: 0
             }
+        },
+        
+        getBranches: function(ref){
+            
+            console.log('get branches');
+            
+            var branches = [{name: "ciao"}];
+            
+            ref.once("value", function (snapshot) {
+                
+                snapshot.forEach(function (childsnapshot) {
+                    
+                    var key = childsnapshot.key();
+                    branches.push({name: key});
+                    // console.log(branches);
+                });
+            });
+            //return branches;
+            //this.branches = branches.slice();
+            //  console.log(this.branches);
+            // this.branches = branches.slice();
+            // console.log(branches);
+            //  console.log(this.branches);
+            
+            for(var i = 0; i < branches.length; i++){
+                
+                console.log(branches[i].name);
+                this.branches.push({name: branches[i].name});
+            }
+            
+            console.log(this.branches);
+            
         },
         
         nextPage: function(){
@@ -107,6 +159,8 @@
                                 pages.selectNext();
                             }
                         });
+                        
+                        this.getBranches(this.ref);
                     } 
                     break;
                 case 5:
