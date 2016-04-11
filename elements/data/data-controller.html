@@ -14,13 +14,13 @@
 <template>
 
     <firebase-collection id="languagesRef"
-                             location="{{location}}Languages/"
+                             location="{{langLocation}}"
                              data = "{{languages}}"
                              query="{{query}}">
     </firebase-collection>
 
     <firebase-auth id="auth" provider="password"
-					location="{{location}}Languages/"
+					location="{{location}}"
 					status-known="{{statusKnown}}"
 					user="{{user}}"
 					on-error="loginError"
@@ -34,9 +34,6 @@
 
     <paper-button on-tap="login" raised>LOGIN</paper-button>
     <paper-button on-tap="logout" raised>LOGOUT</paper-button>
-    <paper-button on-tap="showQuery" raised>query</paper-button>
-    <paper-button on-tap="showAuth" raised>auth</paper-button>
-    <paper-button on-tap="showLocation" raised>loc</paper-button>
     <paper-label  raised>{{user.uid}}</paper-label>
 
 </template>
@@ -93,18 +90,11 @@
             this.notifyPath('location', this.location.slice());  
 		},
 
-		showQuery: function(){
-			console.log(this.query);
-		}, 
-
-		_queryChanged: function(){
-			// console.log('query changed: ')
-			// console.log(this.query);
-		}, 
-
 		_userChanged: function(){
 
 				if (this.statusKnown && this.user){
+                    console.log('hei');
+                    this.langLocation = this.location + 'Languages';
 
 					// console.log('connesso: ');
 					// console.log(this.user);
