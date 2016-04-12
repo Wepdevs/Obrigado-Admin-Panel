@@ -24,10 +24,10 @@
 
 </style>
 
-	<firebase-collection id="ref"
+	<!--<firebase-collection id="ref"
                              location="{{location}}Languages/"
                              data = "{{languages}}">
-    </firebase-collection>
+    </firebase-collection>  -->
 
 
 	<paper-button raised on-tap="openDialog">NEW LANGUAGE</paper-button>
@@ -59,8 +59,6 @@
         			<paper-button on-click="deleteData">X</paper-button>
         		</div>
         </template> 
-
-        <paper-button on-tap="logLanguages">Log Languages</paper-button>
 
 </template>
 
@@ -143,10 +141,6 @@
 		deleteData: function(e){
 
 			this.$.ref.removeByKey(e.model.language.__firebaseKey__);
-		}, 
-
-		logLanguages: function(){
-			console.log(this.languages);
 		}
 	});
 

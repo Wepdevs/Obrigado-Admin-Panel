@@ -15,8 +15,17 @@
 
     <firebase-collection id="languagesRef"
                              location="{{langLocation}}"
-                             data = "{{languages}}"
-                             query="{{query}}">
+                             data = "{{languages}}">
+    </firebase-collection>
+    
+    <firebase-collection id="categoriesRef"
+                             location="{{catLocation}}"
+                             data = "{{categories}}">
+    </firebase-collection>
+    
+    <firebase-collection id="sentencesRef"
+                             location="{{sentLocation}}"
+                             data = "{{sentences}}">
     </firebase-collection>
 
     <firebase-auth id="auth" provider="password"
@@ -28,8 +37,8 @@
 		</firebase-auth>
 
 
-    <template is="dom-repeat" items="{{languages}}" as="language">
-		<div>{{language.name}} </div>
+    <template is="dom-repeat" items="{{categories}}" as="category">
+		<div>{{category.italiano}} </div>
     </template> 
 
     <paper-button on-tap="login" raised>LOGIN</paper-button>
@@ -45,7 +54,15 @@
 		is: "data-controller", 
 
 		properties: {
-				languages: Array,
+				languages: {
+                    type: Array, 
+                    notify: true
+                },
+                categories: {
+                    type: Array, 
+                    notify: true
+                },
+                sentences: Array,
 				location: String,
 				user: {
 			        type: Object,
@@ -56,13 +73,7 @@
 				authRef: {
 					type: Object, 
 					notify: true
-				},
-                query: {
-                    type: Object,
-                    notify: true,
-                    computed: '_computeQuery(location)',
-                    observer: '_queryChanged'
-                },
+				}
 		},
         
         _computeQuery: function(location){
@@ -93,12 +104,10 @@
 		_userChanged: function(){
 
 				if (this.statusKnown && this.user){
-                    console.log('hei');
+                    
                     this.langLocation = this.location + 'Languages';
-
-					// console.log('connesso: ');
-					// console.log(this.user);
-					
+                    this.catLocation = this.location + 'Categories';
+                    this.sentLocation = this.location + 'Sentences';
 				}
 		},
 

@@ -24,15 +24,15 @@
 
 </style>
 
-	<firebase-collection id="ref"
+	<!--<firebase-collection id="ref"
                              location="[[location]]Categories/"
                              data = "{{categories}}">
-    </firebase-collection>
+    </firebase-collection> -->
 
-    <firebase-collection id="lang"
+    <!--<firebase-collection id="lang"
                              location="[[location]]Languages/"
                              data = "{{languages}}">
-    </firebase-collection>
+    </firebase-collection>-->
 
 
     <paper-button raised on-tap="openCreate">NEW CATEGORY</paper-button>
@@ -68,11 +68,10 @@
 
 <!-- TODO: se non si riesce ad usare la chosec category, per aprire una modale con dettagli, cancellare -->
 
-
         <h3>Category List</h3>
+        
 
-
-       <template is="dom-repeat" items="[[categories]]" as="category">
+       <template is="dom-repeat" items="{{categories}}" as="category">
 
 				<paper-dialog id="dialogPositionDetail">
 	        		
@@ -105,10 +104,14 @@
 		properties: {
 
 			categories: {
-				type: Object
+				type: Array,
+                notify: true,
+                reflectToAttribute: true
 			},
 			languages: {
-				type: Object
+				type: Array, 
+                notify: true,
+                reflectToAttribute: true
 			}, 
 
 			chosenCategory: {

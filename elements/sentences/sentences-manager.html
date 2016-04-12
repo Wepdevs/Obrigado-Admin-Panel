@@ -5,7 +5,7 @@
 
 <template>
 
-	<firebase-collection id="categoryRef"
+	<!--<firebase-collection id="categoryRef"
                          location="[[location]]Categories/"
                          data = "{{categories}}">
     </firebase-collection>
@@ -18,7 +18,7 @@
     <firebase-collection id="languagesRef"
                          location="[[location]]Languages/"
                          data = "{{languages}}">
-    </firebase-collection>
+    </firebase-collection>-->
 
 	<paper-dropdown-menu label="Categories">
 	 	 <paper-menu class="dropdown-content" id="categoriesMenu" selected="{{chosenCategory}}" attr-for-selected="italiano">
@@ -68,18 +68,21 @@ Polymer({
 	properties: {
 
 		categories: {
-
-			type: Object
+			type: Array,
+            notify: true,
+            reflectToAttribute: true
 		}, 
 
 		sentences: {
-
-			type: Object
+            type: Array,
+            notify: true,
+            reflectToAttribute: true
 		},
 
 		languages: {
-
-			type: Object
+			 type: Array,
+            notify: true,
+            reflectToAttribute: true
 		},
 
 		chosenCategory:{
@@ -109,7 +112,7 @@ Polymer({
 		
 		retVal = "thumb-up";
 
-		for(var i = 0; i< this.userSentences.length; i++){
+		for(var i = 0; i < this.userSentences.length; i++){
 
 			if(this.userSentences[i]["firebaseKey"] == key){
 				retVal = "thumb-down";

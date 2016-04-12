@@ -63,17 +63,17 @@
 
 			<iron-pages id="ironpages" selected="0">
 				<div role="page" name="Login" order="1" icon="info">
-					<data-controller location="{{location}}"></data-controller> 
+					<data-controller location="{{location}}" languages="{{languages}}" categories="{{categories}}" sentences="{{sentences}}"></data-controller> 
 					<!--<firebase-login id="login" location="[[location]]" user="{{authData}}" user-sentences="{{userSentences}}" on-logged-in="_handleLoggedIn"></firebase-login>-->
 				</div>
-				<!--<div role="page" name="Languages" order="2" icon="language">
-					<languages-manager id="languagesElement" location="[[location]]" languages="{{languages}}"></languages-manager>
+				<div role="page" name="Languages" order="2" icon="language">
+					<languages-manager id="languagesElement" languages="{{languages}}"></languages-manager>
 				</div>
 				<div role="page" name="Categories" order="3" icon="maps:local-offer">
-					<categories-manager location="[[location]]"></categories-manager>
-				</div>
-				<div role="page" name="Sentences" order="4" icon="communication:chat-bubble">
-					<sentences-manager location="[[location]]" user-sentences="{{userSentences}}"></sentences-manager>
+					<categories-manager location="{{location}}" categories="{{categories}}" languages="{{languages}}"></categories-manager>
+				</div> 
+				<!--<div role="page" name="Sentences" order="4" icon="communication:chat-bubble">
+					<sentences-manager location="[[location]]" sentences="{{sentences}}" categories="{{categories}}" languages="{{languages}}" user-sentences="{{userSentences}}"></sentences-manager>
 				</div>-->
 				<div role="page" name="Import" order="5" icon="input">
                     <data-import location="{{location}}"></data-import>
@@ -94,7 +94,9 @@ Polymer({
 
 	properties: {
 		location: String,
-
+        languages: Array,
+        categories: Array,
+        sentences: Array,
 		authData: Object,
 
 		userSentences: {
